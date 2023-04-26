@@ -1,0 +1,14 @@
+[
+    {
+        "id":"WRITE",
+        "name":"WRITE"
+    },
+    {
+        "id":"READ",
+        "name":"READ"
+    },
+    {
+        "id":"ALL",
+        "name":"ALL"
+    }
+]

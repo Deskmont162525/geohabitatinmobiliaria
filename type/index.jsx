@@ -1,0 +1,49 @@
+export const SIGN_IN = "SIGN_IN";
+export const LOGOUT = "LOGOUT";
+
+export const UI_ACTIVE_LOADER = "UI_ACTIVE_LOADER";
+export const UI_REMOVE_LOADER = "UI_REMOVE_LOADER";
+export const UI_ADD_MESSAGE = "UI_ADD_MESSAGE";
+export const UI_REMOVE_MESSAGE = "UI_REMOVE_MESSAGE";
+
+export const ADD_USERS = "ADD_USERS";
+export const RESET_USERS = "RESET_USERS";
+export const SELECT_USER = "SELECT_USER";
+
+export const ADD_COMPANIES = "ADD_COMPANIES";
+
+export const ADD_PROFILES = "ADD_PROFILES";
+
+export const ADD_PERMISSIONS = "ADD_PERMISSIONS";
+export const SELECT_PERMISSION = "SELECT_PERMISSION";
+
+
+
+
+// acciones de los beneficios
+export const ADD_EMPRESAS = "ADD_EMPRESAS";
+export const ADD_CITYS = "ADD_CITYS";
+export const ADD_SEDES = "ADD_SEDES";
+export const ADD_MARCAS = "ADD_MARCAS";
+export const ADD_AREAS = "ADD_AREAS";
+export const ADD_T_CLIENTE = "ADD_T_CLIENTE";
+export const ADD_C_COSTOS = "ADD_C_COSTOS";
+export const ADD_EMPRESA_DATA = "ADD_EMPRESA_DATA";
+export const ADD_EMPRESA_FILT = "ADD_EMPRESA_FILT";
+export const ADD_CITY_FILT = "ADD_CITY_FILT";
+export const ADD_T_CLIENTE_FILT = "ADD_T_CLIENTE_FILT";
+export const ADD_SEDE_FILT = "ADD_SEDE_FILT";
+export const ADD_MARCA_FILT = "ADD_MARCA_FILT";
+export const ADD_ESTADO_FILT = "ADD_ESTADO_FILT";
+export const CLEAN_T_CLIENTE_FILT = "CLEAN_T_CLIENTE_FILT";
+export const CLEAN_CITY_FILT = "CLEAN_CITY_FILT";
+export const CLEAN_SEDE_FILT = "CLEAN_SEDE_FILT";
+export const CLEAN_MARCA_FILT = "CLEAN_MARCA_FILT";
+export const CLEAN_ESTADO_FILT = "CLEAN_ESTADO_FILT";
+export const CLEAN_EMPRESA_DATA_FILT = "CLEAN_EMPRESA_DATA_FILT";
+export const ADD_DATA_ESTADOS = "ADD_DATA_ESTADOS";
+export const UPDATE_DATA_ESTADOS = "UPDATE_DATA_ESTADOS";
+export const CLEAN_EMPRESA_FILT = "CLEAN_EMPRESA_FILT";
+
+
+
