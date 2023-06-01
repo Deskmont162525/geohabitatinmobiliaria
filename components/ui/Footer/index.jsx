@@ -3,7 +3,7 @@ const url_serve = process.env.NEXT_PUBLIC_BASE_PATH;
 const Footer = () => {
   return (
     <>
-    <a href="https://wa.me/3013934712?text=Me%20gustaría%20saber%20el%20precio%20del%20inmueble" className="whatsapp" target="_blank"> <i className="fa fa-whatsapp whatsapp-icon"></i></a>
+    <a href="https://wa.me/3053273238?text=Me%20comunico%20desde%20el%20aplicativo%20web%20y%20quiero%20información%20sobre%20sus%20servicios%20" className="whatsapp" target="_blank"> <i className="fa fa-whatsapp whatsapp-icon"></i></a>
       <div className="footer">
         <div className="container">
           <div className="row">
@@ -11,16 +11,16 @@ const Footer = () => {
               <h4>Information</h4>
               <ul className="row">
                 <li className="col-lg-12 col-sm-12 col-xs-3">
-                  <a href="about.php">About</a>
+                  <a href={`/${url_serve}/nosotros`}>Nosotros</a>
                 </li>
                 <li className="col-lg-12 col-sm-12 col-xs-3">
-                  <a href="agents.php">Agents</a>
+                  <a href={`/${url_serve}/agentes`}>Agentes</a>
                 </li>
                 <li className="col-lg-12 col-sm-12 col-xs-3">
-                  <a href="blog.php">Blog</a>
+                  <a href={`/${url_serve}/blog`}>Blog</a>
                 </li>
                 <li className="col-lg-12 col-sm-12 col-xs-3">
-                  <a href="contact.php">Contact</a>
+                  <a href={`/${url_serve}/contacto`}>Contacto</a>
                 </li>
               </ul>
             </div>
@@ -45,16 +45,16 @@ const Footer = () => {
             <div className="col-lg-3 col-sm-3">
               <h4>Follow us</h4>
               <a href="#">
-                <img src={`${url_serve}/images/facebook.png`} alt="facebook" />
+                <img src={`/${url_serve}/images/facebook.png`} alt="facebook" />
               </a>
               <a href="#">
-                <img src={`${url_serve}/images/twitter.png`} alt="twitter" />
+                <img src={`/${url_serve}/images/twitter.png`} alt="twitter" />
               </a>
               <a href="#">
-                <img src={`${url_serve}/images/linkedin.png`} alt="linkedin" />
+                <img src={`/${url_serve}/images/linkedin.png`} alt="linkedin" />
               </a>
               <a href="#">
-                <img src={`${url_serve}/images/instagram.png`} alt="instagram" />
+                <img src={`/${url_serve}/images/instagram.png`} alt="instagram" />
               </a>
             </div>
 

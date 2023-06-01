@@ -4,7 +4,7 @@ const SubNavbar = ({title}) => {
     return ( <>
     <div className="inside-banner">
   <div className="container">
-    <span className="pull-right"><a href={`/${url_serve}`}>Home</a> / {title}</span>
+    <span className="pull-right"><a href={`/${url_serve}`}>Inicio</a> / {title}</span>
     <h2>{title}</h2>
   </div>
 </div>

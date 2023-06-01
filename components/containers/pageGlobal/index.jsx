@@ -9,7 +9,7 @@ import React from "react";
 import PageSearch from "../pageSearch";
 
 const url_serve = process.env.NEXT_PUBLIC_BASE_PATH;
-
+const imagen_movil = "/logoMovilGeo.png";
 const PageGlobal = () => {
   const [showP, setShowP] = React.useState("");
   const changeShow = (temp) => {
@@ -18,20 +18,29 @@ const PageGlobal = () => {
   return (
     <>
       <div className="navbar-wrapper">
-        <Navbar />
+        <Navbar active="Inicio" />
       </div>
       <div className="container">
         <div className="header">
           <Link href="/">
             <a>
-              <Image
-                src={`/${url_serve}/images/logo.jpeg`}
-                alt="Geohabitat Inmobiliaria"
-                width={250}
-                height={100}
-                priority={true}
-                style={{ borderRadius: 10 }}
-              />
+              <picture>
+                {imagen_movil && (
+                  <source
+                    media="(max-width: 768px)"
+                    srcSet={
+                      imagen_movil && `/${url_serve}/imagesPages${imagen_movil}`
+                    }
+                  />
+                )}
+                <img
+                  className="header-image"
+                  src={`/${url_serve}/imagesPages/logoPcGeo.png`}
+                  alt="Geohabitat Inmobiliaria"
+                width={"40%"}
+                height={150}
+                />
+              </picture>
             </a>
           </Link>
           <ul className="pull-right">
@@ -52,6 +61,7 @@ const PageGlobal = () => {
         <>
           <Sliders sliders={slides} />
           <FormSearch />
+          <Sliders sliders={slides} />
         </>
       )}
 
