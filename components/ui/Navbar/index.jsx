@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const Navbar = () => {
+const Navbar = ({active}) => {
   return (
     <nav className="navbar navbar-inverse" role="navigation">
       <div className="container" style={{    display: "block !important"}}>
@@ -14,29 +14,34 @@ const Navbar = () => {
         </div>
         <div className="navbar-collapse collapse">
           <ul className="nav navbar-nav navbar-right" style={{display: "block!important"}}>
-            <li className="active">
+            <li className={active === "Inicio" ? "active":""}>
               <Link href="/">
-                <a>Home</a>
+                <a>Inicio</a>
               </Link>
             </li>
-            <li>
-              <Link href="/about">
-                <a>About</a>
+            <li className={active === "Nosotros" ? "active":""}>
+              <Link href="/nosotros">
+                <a>Nosotros</a>
               </Link>
             </li>
-            <li>
-              <Link href="/agents">
-                <a>Agents</a>
+            <li className={active === "Agentes" ? "active":""}>
+              <Link href="/agentes">
+                <a>Agentes</a>
               </Link>
             </li>
-            <li>
+            <li className={active === "Blog" ? "active":""}>
               <Link href="/blog">
                 <a>Blog</a>
               </Link>
             </li>
-            <li>
-              <Link href="/contact">
-                <a>Contact</a>
+            <li className={active === "Contacto" ? "active":""}>
+              <Link href="/contacto">
+                <a>Contacto</a>
+              </Link>
+            </li>
+            <li className={active === "descarga-formularios" ? "active":""}>
+              <Link href="/descarga-formularios">
+                <a>Descarga de Formularios</a>
               </Link>
             </li>
           </ul>

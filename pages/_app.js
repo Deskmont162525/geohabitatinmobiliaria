@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
 import { createTheme } from "@material-ui/core/styles";
-import "../styles/globals.css";
 import "../styles/404.styles.scss";
+import "../styles/globals.css";
+import "../styles/admin.styles.css";
+import "../public/assets/bootstrap/css/bootstrap.css";
+import "../public/assets/style.css";
+import "../public/assets/owl-carousel/owl.carousel.css";
+import "../public/assets/owl-carousel/owl.theme.css";
+import "../public/assets/slitslider/css/style.css";
+
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
 
 import authReducer from "../reducers/authReducer";
 import uiReducer from "../reducers/uiReducer";
@@ -43,11 +53,10 @@ const SiteApp = (props) => {
   }, [router]);
 
   useEffect(() => {
-    console.log("si toma el efect");
     if (isLoading) {
       const timer = setTimeout(() => {
         setIsLoading(false);
-      }, 5000);
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [isLoading]);
