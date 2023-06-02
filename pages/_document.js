@@ -22,7 +22,7 @@ export default class MyDocument extends Document {
           />
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         
-          <script src="http://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
+          <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
           <script
             src={`/${url_serve}/assets/bootstrap/js/bootstrap.js`}
           ></script>
