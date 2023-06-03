@@ -221,6 +221,14 @@
 	top: 280px;
 }
 
+.p-valid {
+    border-color: #56f436 !important;
+}
+
+.p-invalid-label {
+	color: #f44336;
+}
+
 @keyframes spin {
 	0% {
 		transform: scale(1) rotate(0deg);

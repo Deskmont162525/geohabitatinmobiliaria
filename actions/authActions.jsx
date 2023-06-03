@@ -1,134 +1,34 @@
-import { ADMIN } from "../helpers/constants";
-import { SUCESS } from "../helpers/constants";
-import { AuthService } from "../services/AuthService";
-import {
-  SIGN_IN,
-  UI_ACTIVE_LOADER,
-  UI_REMOVE_LOADER,
-  LOGOUT,
-  UI_ADD_MESSAGE,
-} from "../type";
-import { setCookie, destroyCookie } from "nookies";
+import { decodeToken } from '../data/functions';
+import { routes } from '../data/routes';
+import { AuthService } from '../services/AuthService';
+import { SIGN_IN, UI_ACTIVE_LOADER, UI_REMOVE_LOADER, LOGOUT, UI_ADD_MESSAGE } from '../type';
+import { setCookie, destroyCookie, parseCookies  } from 'nookies';
+const cookies = parseCookies();
 
-export const signIn = async ({
-  dispatchUi,
-  dispatchAuth,
-  form,
-  router,
-  onChangeDialog,
-}) => {
-  dispatchUi({
-    type: UI_ACTIVE_LOADER,
-  });
-  const response = await AuthService.postSignIn(form);
-  if (response.code === SUCESS) {
-    const { data } = response;
-    const dataUser = await AuthService.getAboutMe(data.accessToken);
-    if (dataUser.code === SUCESS) {
-      if (dataUser.data.profile.name === ADMIN) {
+export const signIn = async ({ dispatchAuth, formData, router }) => {
+    const response = await AuthService.postSignIn(formData);
+    if (response.code === 200) {
+        const dataToken = decodeToken(response.token);
         dispatchAuth({
-          type: SIGN_IN,
-          payload: dataUser.data,
+            type: SIGN_IN,
+            payload: dataToken
         });
-        const dataToken = await AuthService.decodeToken(data.accessToken);
-        setCookie(null, "token", data.accessToken, {
-          expires: new Date(dataToken.data?.expiresIn),
-        });
-        setCookie(null, "user", JSON.stringify(dataUser.data), {
-          expires: new Date(dataToken.data?.expiresIn),
-        });
-        setCookie(null, "roles", dataToken.data?.authorities, {
-          expires: new Date(dataToken.data?.expiresIn),
-        });
-        router.push("/inicio");
-        dispatchUi({
-          type: UI_REMOVE_LOADER,
-        });
-      }
+        let tempData = {
+            data:dataToken,
+            token:response.token,
+            code:200
+        }
+        setCookie(null, "userJKMF", JSON.stringify(tempData)),{path: '/',expires: new Date(dataToken?.exp)};        
+        return tempData;
+    } else {
+        return response;
     }
-  } else {
-    dispatchUi({
-      type: UI_REMOVE_LOADER,
-    });
-    dispatchUi({
-      type: UI_ADD_MESSAGE,
-      payload: {
-        message: "Error al iniciar sesión,verifique credenciales",
-      },
-    });
-    onChangeDialog();
-  }
 };
 
-export const forgotPassword = async ({
-  dispatchUi,
-  form,
-  onChangeDialogSuccess,
-  onChangeDialogFailed,
-}) => {
-  dispatchUi({
-    type: UI_ACTIVE_LOADER,
-  });
-  const response = await AuthService.postForgotPassword(form);
-  if (response.code === SUCESS) {
-    dispatchUi({
-      type: UI_ADD_MESSAGE,
-      payload: {
-        message: "Se envio un email a tu correo electronico",
-      },
+export const logOut = ({ dispatchAuth, router }) => { 
+    destroyCookie(null, "userJKMF");  
+    dispatchAuth({
+        type: LOGOUT
     });
-    onChangeDialogSuccess();
-  } else {
-    dispatchUi({
-      type: UI_ADD_MESSAGE,
-      payload: {
-        message: "Error correo electronico inexistente",
-      },
-    });
-    onChangeDialogFailed();
-  }
-  dispatchUi({
-    type: UI_REMOVE_LOADER,
-  });
-};
-
-export const recoveryPassword = async ({
-  dispatchUi,
-  form,
-  onChangeDialogSuccess,
-  onChangeDialogFailed,
-}) => {
-  dispatchUi({
-    type: UI_ACTIVE_LOADER,
-  });
-  const response = await AuthService.putRecoveryPassword(form);
-  if (response.code === SUCESS) {
-    dispatchUi({
-      type: UI_ADD_MESSAGE,
-      payload: {
-        message: "Cambio de contraseña exitoso",
-      },
-    });
-    onChangeDialogSuccess();
-  } else {
-    dispatchUi({
-      type: UI_ADD_MESSAGE,
-      payload: {
-        message: "Error al cambiar contraseña",
-      },
-    });
-    onChangeDialogFailed();
-  }
-  dispatchUi({
-    type: UI_REMOVE_LOADER,
-  });
-};
-
-export const logOut = ({ dispatchAuth, router }) => {
-  dispatchAuth({
-    type: LOGOUT,
-  });
-  destroyCookie(null, "token");
-  destroyCookie(null, "user");
-  router.push("/");
+    router.push('/');
 };
