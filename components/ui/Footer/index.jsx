@@ -1,3 +1,5 @@
+import ModalLogin from "../../ui/Model";
+
 const url_serve = process.env.NEXT_PUBLIC_BASE_PATH;
 
 const Footer = () => {
@@ -75,7 +77,8 @@ const Footer = () => {
           </div>
           <p className="copyright">Copyright 2013. All rights reserved.</p>
         </div>
-      </div>      
+      </div> 
+      <ModalLogin />     
     </>
   );
 };

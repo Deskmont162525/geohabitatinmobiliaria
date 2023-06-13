@@ -1,7 +1,7 @@
 .big {
 	font-size: 16px;
 	text-align: justify;
-  }
+}
 
 .spanButon {
 	cursor: pointer;
@@ -31,23 +31,25 @@
 	z-index: 100;
 	box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
 	animation: pulse 1s ease-in-out infinite;
-  }
-  
-  @keyframes pulse {
+}
+
+@keyframes pulse {
 	0% {
-	  transform: scale(1);
-	  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+		transform: scale(1);
+		box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
 	}
+
 	50% {
-	  transform: scale(1.1);
-	  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.5);
+		transform: scale(1.1);
+		box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.5);
 	}
+
 	100% {
-	  transform: scale(1);
-	  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+		transform: scale(1);
+		box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
 	}
-  }
-  
+}
+
 .whatsapp-icon {
 	margin-top: 13px;
 }
@@ -222,13 +224,96 @@
 }
 
 .p-valid {
-    border-color: #56f436 !important;
+	border-color: #56f436 !important;
 }
 
 .p-invalid-label {
 	color: #f44336;
 }
 
+.buttom-a {
+	color: #72b70f !important;
+	text-decoration: none;
+	background: none;
+	border: none;
+	padding: 0;
+	font: inherit;
+	color: inherit;
+	cursor: pointer;
+	text-decoration: none;
+	outline: none;
+	margin-left: 20px;
+}
+
+/* botones de tabla crud */
+
+.p-actualizar {
+	border-radius: 50%;
+	height: 3rem;
+	color: #ffffff;
+}
+
+.p-eliminar {
+	border-radius: 50%;
+	height: 3rem;
+	color: #ffffff;
+}
+
+.separator {
+	margin-top: 50px;
+}
+
+.spinner-container {
+	display: flex;
+	align-items: center;
+	margin: 20px;
+}
+
+.spinner {
+	border: 6px solid #f3f3f3;
+	/* Color del borde del spinner */
+	border-top: 6px solid #3498db;
+	/* Color de la parte superior del spinner */
+	border-radius: 50%;
+	width: 30px;
+	/* Tamaño del spinner */
+	height: 30px;
+	/* Tamaño del spinner */
+	animation: spin 1s linear infinite;
+	/* Animación de rotación del spinner */
+	margin-right: 10px;
+	/* Espacio entre el spinner y el texto */
+}
+
+.spinner-text {
+	/* Estilos para el texto al lado del spinner */
+	margin-left: 10px;
+	color: #3498db;
+	font-weight: bold;
+	/* Engrosa el texto */
+	font-size: 1em;
+}
+
+/* fin botones de tabla crud */
+
+/* mensaje confirmacion image  */
+.success-message {
+	display: flex;
+	align-items: center;
+	margin-top: 10px;
+	color: green;
+  }
+  
+  .success-icon {
+	font-size: 1.5rem;
+	margin-right: 5px;
+  }
+  
+  .success-text {
+	font-weight: bold;
+  }
+  
+/* mensaje confirmacion image fin  */
 @keyframes spin {
 	0% {
 		transform: scale(1) rotate(0deg);

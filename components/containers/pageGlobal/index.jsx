@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Navbar from "../../ui/Navbar";
-import Image from "next/image";
 import Sliders from "../sliders";
 import FormSearch from "../formSearch";
 import Footer from "../../ui/Footer";

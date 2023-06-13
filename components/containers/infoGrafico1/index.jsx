@@ -110,7 +110,7 @@ const LandingPage1 = () => {
   ];
 
   return (
-    <div>
+    <div style={{padding: 5}}>
       <Menubar
         model={menuItems}
         value={currentSelection}
