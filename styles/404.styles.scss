@@ -413,3 +413,33 @@ $mid-brown:#AE8B56;
 /*======================
     spinner fin
 =======================*/
+
+
+// styles scss globales
+.customer-badge,
+.product-badge,
+.order-badge {
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+}
+
+.product-badge {
+  &.status-instock {
+      background: #C8E6C9;
+      color: #256029;
+  }
+
+  &.status-outofstock {
+      background: #FFCDD2;
+      color: #C63737;
+  }
+
+  &.status-lowstock {
+      background: #FEEDAF;
+      color: #8A5340;
+  }
+}

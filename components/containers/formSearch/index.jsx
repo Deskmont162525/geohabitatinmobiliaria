@@ -1,5 +1,3 @@
-import ModalLogin from "../../ui/Model";
-
 const FormSearch = () => {
   return (
     <>
@@ -61,8 +59,7 @@ const FormSearch = () => {
             </div>
           </div>
         </div>
-      </div>
-      <ModalLogin />
+      </div>      
     </>
   );
 };

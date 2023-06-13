@@ -206,6 +206,74 @@
   text-align: right;
 }
 
+/* Estilos para los botones de carga file */
+input[type="file"] {
+  display: none; /* Ocultar el input por defecto */
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 8px 20px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.custom-file-upload:hover {
+  background-color: #0069d9;
+}
+
+/* Estilos para el botón de cargar archivo */
+.upload-button {
+  display: inline-block;
+  padding: 8px 20px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+  background-color: #218838;
+}
+
+
+.file-upload-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.file-upload-group label {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.file-upload-group .button-container {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.file-upload-group .file-title {
+  margin-top: 5px;
+  flex-basis: 100%;
+}
+
+@media screen and (max-width: 767px) {
+  .file-upload-group .button-container {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
 @media (max-width: 991px) {
   .number-card-number {
     font-size: 30px;
