@@ -3,6 +3,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { InputFile } from "../../ui/InputFile";
 import { CheckCircleOutlined } from '@material-ui/icons';
+import InputFileDos from "../../ui/InputFileDos";
 
 const FormAgentes = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -49,6 +50,15 @@ const FormAgentes = () => {
                 setFormData={setFormData}
                 id_user="jk87376732"
               />
+              // <InputFileDos
+              // label="Adjunta la foto de perfil *"
+              // setState={setFormData}
+              // state={formData}
+              // helperText="Adjunta la foto de perfil *"
+              // nameForm="imagen"
+              // id="imagen"
+              // id_user="jk87376732"
+              // />
             )}
           </div>
           {formData?.imagen !== null && (
