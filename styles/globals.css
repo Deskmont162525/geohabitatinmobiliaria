@@ -700,3 +700,80 @@
 /*======================
     spinner inter fin
 =======================*/
+
+/* page redirigir */
+
+.container-redi {
+	margin-top: 0px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+  }
+  
+  .grid-redi {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	text-align: start;
+  }
+  
+  .grid-redi [class^="MuiGrid-root"] {
+	padding: 0;
+  }
+  
+  .grid-redi [class^="MuiGrid-root"][class*="-xs-"] {
+	padding: 20px;
+  }
+  
+  .title-redi {
+	font-size: 70px !important;
+	font-weight: 700 !important;
+	color: #262626 !important;
+	text-align: flex-start !important;
+  }
+  
+  @media (max-width: 900px) {
+	.title-redi {
+	  font-size: 50px !important;
+	}
+  }
+  
+  .subtitle-redi {
+	font-size: 30px !important;
+	font-weight: 400 !important;
+	color: #262626 !important;
+	margin: 0px 80px !important;
+  }
+  
+  @media (max-width: 900px) {
+	.subtitle-redi {
+	  font-size: 30px !important;
+	}
+  }
+  
+  .link-redi {
+	font-size: 30px !important;
+	font-weight: 400 !important;
+	color: #0653B6 !important;
+	margin: 20px 0px !important;
+	cursor: pointer !important;
+  }
+  
+  @media (max-width: 900px) {
+	.link-redi {
+	  font-size: 20px !important;
+	}
+  }
+  
+  .image-redi {
+  height: 260px;
+  }
+  
+  @media (max-width: 600px) {
+	.image-redi {
+	  height: 100px;
+	  }
+  }

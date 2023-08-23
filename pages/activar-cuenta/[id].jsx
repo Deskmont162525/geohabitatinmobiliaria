@@ -35,7 +35,7 @@ const PageActiveUsuario = ({dataClienteUser}) => {
                 </section>
             </div>
             <div className="col-12 md:col-6 overflow-hidden">
-                <img src={`/${url}/imagesPages/logoMovilGeo.png`} alt="hero-1" style={{ clipPath: 'polygon(0, 100% 0%, 100% 100%, 0 100%)', objectFit: 'cover', width: '100%', height: '100%' }} />
+                <img src={`/${url}/imagesPages/geoLogoNewSF.png`} alt="hero-1" style={{ clipPath: 'polygon(0, 100% 0%, 100% 100%, 0 100%)', objectFit: 'cover', width: '100%', height: '100%' }} />
             </div>
         </div>
     </> );

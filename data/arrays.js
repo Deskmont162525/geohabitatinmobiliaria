@@ -112,3 +112,46 @@ export const tiposDocumento = [
   { name: "Registro Civil", code: "RC" },
   { name: "Pasaporte", code: "PA" },
 ];
+
+
+export const TiposUnidad = [
+  { label: 'NO', value: 'NO' },
+    { label: 'SI - UNIDAD CERRADA', value: 'SI - UNIDAD CERRADA' },
+    { label: 'SI- UNIDAD ABIERTA', value: 'SI- UNIDAD ABIERTA' }
+]
+
+export const EstadosPropiedad = [
+  { label: 'VENTA', value: 'VENTA' },
+    { label: 'RENTA', value: 'RENTA' },
+    { label: 'INGRESO', value: 'INGRESO' },
+    { label: 'VENDIDO', value: 'VENDIDO' },
+    { label: 'RENTADO', value: 'RENTADO' },
+    { label: 'ENTREGAR', value: 'ENTREGAR' },
+    { label: 'ENTREGA', value: 'ENTREGA' },
+    { label: 'RETIRADO', value: 'RETIRADO' }
+]
+
+export const TiposZonaComun = [
+  { label: 'SALA - COMEDOR', value: 'SALA - COMEDOR' },
+    { label: 'SOLO SALA', value: 'SOLO SALA' }
+]
+
+
+export const TiposCocinas = [
+  { label: 'SEMI-INTEGRAL', value: 'SEMI-INTEGRAL' },
+  { label: 'INTEGRAL', value: 'INTEGRAL' },
+    { label: 'SENCILLA', value: 'SENCILLA' }
+]
+
+export const TiposRopas = [
+  { label: 'PATIO', value: 'PATIO' },
+    { label: 'ZONA DE ROPA', value: 'ZONA DE ROPA' }
+]
+
+
+export const TiposCitas = [
+  { label: 'PENDIENTE', value: 'PENDIENTE' },
+  { label: 'CANCELADA POR EL CILENTE', value: 'CANCELADA POR EL CILENTE' },
+  { label: 'CANCELADA POR EL AGENTE', value: 'CANCELADA POR EL AGENTE' },
+    { label: 'REALIZADA', value: 'REALIZADA' }
+]

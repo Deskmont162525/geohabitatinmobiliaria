@@ -2,10 +2,23 @@ import { Menubar } from "primereact/menubar";
 import { Toast } from "primereact/toast";
 import { Avatar } from "primereact/avatar";
 import PersonIcon from "@material-ui/icons/Person";
+import { useRouter } from "next/router";
+import { destroyCookie, parseCookies } from "nookies";
 
 const urlGlobal = process.env.NEXT_PUBLIC_BASE_PATH;
 
-const NavbarAdmin = ({ data }) => {
+const NavbarAdmin = () => {
+  const router = useRouter();
+  const { userGEO } = parseCookies();
+  const cookieValue =
+    userGEO === undefined || userGEO === "" ? "" : JSON.parse(userGEO);
+
+  const handleLogout = () => {
+    // destroyCookie(null, "userGEO");
+    destroyCookie(userGEO, "userGEO");
+    // Otros pasos para realizar el logout
+    router.push("/logout");
+  };
   const nestedMenuitems = [
     {
       label: "Formularios",
@@ -40,6 +53,11 @@ const NavbarAdmin = ({ data }) => {
               icon: "pi pi-fw pi-plus",
               url: `/${urlGlobal}/admin/forms/Citas`,
             },
+            {
+              label: "Imagenes",
+              icon: "pi pi-fw pi-plus",
+              url: `/${urlGlobal}/admin/forms/Imagenes-Propiedades`,
+            },
           ],
         },
         {
@@ -56,12 +74,18 @@ const NavbarAdmin = ({ data }) => {
         {
           label: "Configuraciones",
           icon: "pi pi-fw pi-cog",
-          url: `/${urlGlobal}/${data?.rol === "asesor" ? "asesor/form-datos-personales" :"admin/form-datos-personales"}`,
+          url: `/${urlGlobal}/${
+            cookieValue?.data?.role.name === "asesor"
+              ? "asesor/form-datos-personales"
+              : "admin/form-datos-personales"
+          }`,
         },
         {
           label: "Perfil",
           icon: "pi pi-fw pi-file",
-          url: `/${urlGlobal}/${data?.rol === "asesor" ? "asesor" :"admin"}`,
+          url: `/${urlGlobal}/${
+            cookieValue?.data?.role.name === "asesor" ? "asesor" : "admin"
+          }`,
         },
       ],
     },
@@ -69,7 +93,7 @@ const NavbarAdmin = ({ data }) => {
     {
       label: "Quit",
       icon: "pi pi-fw pi-sign-out",
-      url: "/edit",
+      command: handleLogout
     },
     { separator: true },
     {
@@ -87,12 +111,18 @@ const NavbarAdmin = ({ data }) => {
             onClick={(e) => options.onClick(e)}
             className="w-full p-link flex align-items-center"
           >
-            <Avatar image={data?.url || null} className="mr-2" shape="circle">
-              {!data?.url && <PersonIcon className="pi pi-user-circle" />}
+            <Avatar
+              image={cookieValue?.data?.url || null}
+              className="mr-2"
+              shape="circle"
+            >
+              {!cookieValue?.data?.url && (
+                <PersonIcon className="pi pi-user-circle" />
+              )}
             </Avatar>
             <div className="flex flex-column align">
-              <span className="font-bold">{data?.nombre}</span>
-              <span className="text-sm">{data?.rol}</span>
+              <span className="font-bold">{cookieValue?.data?.username}</span>
+              <span className="text-sm">{cookieValue?.data?.role.name}</span>
             </div>
           </button>
         );

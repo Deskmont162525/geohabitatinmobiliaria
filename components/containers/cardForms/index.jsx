@@ -1,8 +1,11 @@
+import FomrCitasCrud from "../../elements/formCitas";
+import FormImagesPropiedad from "../../elements/formImagesPropiedad";
 import FomrInteresadosCrud from "../../elements/formInteresados";
+import FomrPropiedades from "../../elements/formPropiedades";
 import FormTipoPropied from "../../elements/formTipoPropi";
 import Fomrusuarios from "../../elements/formUsuarios";
 
-const CardForms = ({ nameForm }) => {
+const CardForms = ({ nameForm, tipoPagoOptions, agentsOptions, propiedOptions }) => {
   return (
     <>
       <div className="surface-0 p-4 shadow-2 border-round">
@@ -26,7 +29,14 @@ const CardForms = ({ nameForm }) => {
           {nameForm === "Tipo Propiedades" && (
             <FormTipoPropied nameForm={nameForm} />
           )}
+          {nameForm === "Propiedades" && (
+            <FomrPropiedades nameForm={nameForm} tipoPagoOptions={tipoPagoOptions} agentsOptions={agentsOptions} />
+          )}
+          {nameForm === "Imagenes-Propiedades" && (
+            <FormImagesPropiedad nameForm={nameForm} propiedOptions={propiedOptions} />
+          )}
           {nameForm === "Usuarios" && <Fomrusuarios nameForm={nameForm} />}
+          {nameForm === "Citas" && <FomrCitasCrud nameForm={nameForm} />}
         </div>
       </div>
     </>

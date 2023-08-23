@@ -1,6 +1,20 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { destroyCookie, parseCookies } from "nookies";
 
-const Navbar = ({ active }) => {
+const Navbar = ({ active, setIsOpen }) => {
+  const router = useRouter();
+  const { userGEO } = parseCookies();
+
+  // Obtener el valor de una cookie específica
+  const handleLogout = () => {
+    destroyCookie(userGEO, "userGEO", {path: '/app'});
+    // Otros pasos para realizar el logout
+    router.push("/logout");
+  };
+
   return (
     <nav className="navbar navbar-inverse" role="navigation">
       <div className="container" style={{ display: "block !important" }}>
@@ -52,32 +66,57 @@ const Navbar = ({ active }) => {
                 <a>Descarga de Formularios</a>
               </Link>
             </li>
-            <li className="dropdown">
-              <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                Zona Interactiva <span className="caret"></span>
-              </a>
-              <ul className="dropdown-menu">
-                <li>
-                  <Link href="https://simidocs.siminmobiliarias.com/base/simired/simidocsapi1.0/index.php?inmo=1174&tipo=1">
-                    <a target="_blank">Propietarios</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://simidocs.siminmobiliarias.com/base/simired/simidocsapi1.0/index.php?inmo=1174&tipo=2">
-                    <a target="_blank">Arrendatarios</a>
-                  </Link>
-                </li>
-                <li>
-                  <button
-                  className="buttom-a"
-                  data-toggle="modal"
-                  data-target="#loginpop"
+            {userGEO && (
+              <li>
+                <button
+                  onClick={handleLogout}
+                  style={{
+                    marginTop: "5px",
+                    marginRight: "5px",
+                    borderRadius: 5,
+                    backgroundColor: "green",
+                    color: "white",
+                    padding: "5px 10px",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
                 >
-                  Admins
+                  <FontAwesomeIcon
+                    icon={faSignOutAlt}
+                    style={{ marginRight: "5px" }}
+                  />
+                  Logout
                 </button>
-                </li>
-              </ul>
-            </li>
+              </li>
+            )}
+
+            {userGEO === undefined && (
+              <li className="dropdown">
+                <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                  Zona Interactiva <span className="caret"></span>
+                </a>
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link href="https://simidocs.siminmobiliarias.com/base/simired/simidocsapi1.0/index.php?inmo=1174&tipo=1">
+                      <a target="_blank">Propietarios</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="https://simidocs.siminmobiliarias.com/base/simired/simidocsapi1.0/index.php?inmo=1174&tipo=2">
+                      <a target="_blank">Arrendatarios</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      className="buttom-a"
+                      onClick={() => setIsOpen(true)}
+                    >
+                      Admins
+                    </button>
+                  </li>
+                </ul>
+              </li>
+            )}
           </ul>
         </div>
       </div>

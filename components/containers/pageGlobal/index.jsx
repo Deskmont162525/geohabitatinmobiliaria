@@ -6,10 +6,14 @@ import Footer from "../../ui/Footer";
 import { slides } from "../../../data/objets";
 import React from "react";
 import PageSearch from "../pageSearch";
+import ModalLogin from "../../ui/Model";
+import PageIndex from "../pageIndex";
 
 const url_serve = process.env.NEXT_PUBLIC_BASE_PATH;
 const imagen_movil = "/logoMovilGeo.png";
-const PageGlobal = () => {
+const PageGlobal = ({dataPropied}) => {
+  console.log("dataPropied desde fuera",dataPropied);
+  const [isOpen, setIsOpen] = React.useState(false);
   const [showP, setShowP] = React.useState("");
   const changeShow = (temp) => {
     setShowP(temp);
@@ -17,7 +21,7 @@ const PageGlobal = () => {
   return (
     <>
       <div className="navbar-wrapper">
-        <Navbar active="Inicio" />
+        <Navbar active="Inicio" setIsOpen={setIsOpen} />
       </div>
       <div className="container">
         <div className="header">
@@ -36,8 +40,8 @@ const PageGlobal = () => {
                   className="header-image"
                   src={`/${url_serve}/imagesPages/logoPcGeo.png`}
                   alt="Geohabitat Inmobiliaria"
-                width={"40%"}
-                height={150}
+                  width={"40%"}
+                  height={150}
                 />
               </picture>
             </a>
@@ -59,17 +63,21 @@ const PageGlobal = () => {
       {showP === "" && (
         <>
           <Sliders sliders={slides} />
-          <FormSearch />
-          <Sliders sliders={slides} />
+          <ModalLogin />
+          <FormSearch setIsOpen={setIsOpen} />
+          <PageIndex />
+          {/* <Sliders sliders={slides} /> */}
         </>
       )}
 
       {showP === "VENTA" && <PageSearch showP={showP} />}
       {showP === "RENTA" && <PageSearch showP={showP} />}
 
-      <Footer />
+      <Footer isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };
+
+
 
 export default PageGlobal;

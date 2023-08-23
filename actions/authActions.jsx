@@ -1,24 +1,32 @@
 import { decodeToken } from '../data/functions';
-import { routes } from '../data/routes';
 import { AuthService } from '../services/AuthService';
-import { SIGN_IN, UI_ACTIVE_LOADER, UI_REMOVE_LOADER, LOGOUT, UI_ADD_MESSAGE } from '../type';
-import { setCookie, destroyCookie, parseCookies  } from 'nookies';
-const cookies = parseCookies();
+import { SIGN_IN, LOGOUT } from '../type';
+import { setCookie, destroyCookie  } from 'nookies';
 
-export const signIn = async ({ dispatchAuth, formData, router }) => {
+export const signIn = async (formData, {router, closeModal, setMsgError}) => {
     const response = await AuthService.postSignIn(formData);
     if (response.code === 200) {
-        const dataToken = decodeToken(response.token);
-        dispatchAuth({
-            type: SIGN_IN,
-            payload: dataToken
-        });
+        const dataToken = decodeToken(response.accessToken);
         let tempData = {
-            data:dataToken,
-            token:response.token,
+            decodeToken:dataToken,
+            data:response.user,
+            token:response.accessToken,
             code:200
         }
-        setCookie(null, "userJKMF", JSON.stringify(tempData)),{path: '/',expires: new Date(dataToken?.exp)};        
+        setCookie(null, "userGEO", JSON.stringify(tempData)),{path: '/app',expires: new Date(dataToken?.exp)}; 
+
+        if(response?.user?.role?.name === "admin" || response?.user?.role?.name === "superadmin"){
+            closeModal()
+            setMsgError("")
+            router.push('/admin')
+        }
+
+        if(response?.user?.role?.name === "asesor"){
+            closeModal()
+            setMsgError("")
+            router.push('/asesor')
+        }
+
         return tempData;
     } else {
         return response;
@@ -26,7 +34,7 @@ export const signIn = async ({ dispatchAuth, formData, router }) => {
 };
 
 export const logOut = ({ dispatchAuth, router }) => { 
-    destroyCookie(null, "userJKMF");  
+    destroyCookie(null, "userGEO");  
     dispatchAuth({
         type: LOGOUT
     });

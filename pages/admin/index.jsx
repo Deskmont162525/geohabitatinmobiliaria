@@ -2,6 +2,7 @@ import React from "react";
 import NavbarAdmin from "../../components/ui/NavbarAdmin";
 import LandingPage1 from "../../components/containers/infoGrafico1";
 import CardListC from "../../components/elements/cardListaCitas";
+import { requireNoAuthentication } from "../../HOC/noAuthHOC";
 
 const dataTemp = {
   nombre:"Soy el mejor",
@@ -35,4 +36,6 @@ const AdminPage = ({ nameForm }) => {
   );
 };
 
+// export default requireNoAuthentication(AdminPage);
 export default AdminPage;
+

@@ -2,7 +2,6 @@ import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
-import { FileUpload } from "primereact/fileupload";
 import { InputText } from "primereact/inputtext";
 import { InputSwitch } from "primereact/inputswitch";
 import { Toast } from "primereact/toast";
@@ -13,7 +12,7 @@ import { tipoPropiState } from "../../../states/tipoPropieState";
 import { TipoPropiedService } from "../../../services/TipoPropiService";
 import { validatorDataObjetoTP } from "../../../helpers/validations/tipoPropied";
 
-const FormTipoPropied = () => {
+const FormTipoPropied = ({nameForm}) => {
   const [products, setProducts] = useState(null);
   const [error, setError] = useState({});
   const [titleForm, setTitleForm] = useState("Crear");
@@ -223,14 +222,6 @@ const FormTipoPropied = () => {
   const rightToolbarTemplate = () => {
     return (
       <React.Fragment>
-        <FileUpload
-          mode="basic"
-          accept="image/*"
-          maxFileSize={1000000}
-          label="Import"
-          chooseLabel="Import"
-          className="mr-2 inline-block"
-        />
         <Button
           label="Export"
           icon="pi pi-upload"
@@ -295,7 +286,7 @@ const FormTipoPropied = () => {
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">Administración de Interesados</h5>
+      <h5 className="m-0">Administración de {nameForm}</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -351,7 +342,7 @@ const FormTipoPropied = () => {
             rowsPerPageOptions={[5, 10, 25]}
             className="datatable-responsive"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            currentPageReportTemplate="Se muestran {first} de {last} de {totalRecords} interesados"
+            currentPageReportTemplate={`Se muestran {first} de {last} de {totalRecords} ${nameForm}`}
             globalFilter={globalFilter}
             emptyMessage="No Hay Interesados."
             header={header}
@@ -451,7 +442,7 @@ const FormTipoPropied = () => {
               />
               {product && (
                 <span>
-                  Estas seguro de eliminar el interesado <b>{product.nombre}</b>
+                  Estas seguro de eliminar el {nameForm} <b>{product.nombre}</b>
                   ?
                 </span>
               )}
@@ -473,7 +464,7 @@ const FormTipoPropied = () => {
               />
               {product && (
                 <span>
-                  Estas seguro de eliminar los interesados seleccionados?
+                  Estas seguro de eliminar los {nameForm} seleccionados?
                 </span>
               )}
             </div>

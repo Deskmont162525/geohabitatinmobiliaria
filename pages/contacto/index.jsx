@@ -1,3 +1,4 @@
+import React from "react";
 import FormContact from "../../components/containers/formContac";
 import Footer from "../../components/ui/Footer";
 import HeaderPages from "../../components/ui/Header";
@@ -5,10 +6,11 @@ import Navbar from "../../components/ui/Navbar";
 import SubNavbar from "../../components/ui/SubNavbar";
 
 const ContactoPage = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
   return (
     <>
       <div className="navbar-wrapper">
-        <Navbar active="Contacto" />
+        <Navbar active="Contacto" setIsOpen={setIsOpen} />
       </div>
       <HeaderPages />
       <SubNavbar title="Contacto" />
@@ -31,7 +33,7 @@ const ContactoPage = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };

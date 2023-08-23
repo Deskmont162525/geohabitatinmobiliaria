@@ -1,18 +1,20 @@
-import LazyLoad from "react-lazyload";
 import PageGlobal from "../components/containers/pageGlobal";
-import SpinerLoading from "../components/elements/spiner";
+import { PropiedService } from "../services/PropiedadesService";
 
-const HomeView = () => {
+const HomeView = ({dataPropied}) => {
   return (
-    <>
-      
-      {/* <LazyLoad height={200} offset={100}>
-        <img src="tu-imagen.jpg" alt="Tu imagen" />
-      </LazyLoad> */}
-      <PageGlobal />
-      {/* <SpinerLoading /> */}
+    <>      
+      <PageGlobal dataPropied={dataPropied?.data}/>
     </>
   );
 };
+
+export async function getServerSideProps() {
+  const [dataPropied] = await Promise.all([PropiedService.getAllPropiedImagenes()]);
+  // console.log("dataPropied", dataPropied);
+  return {
+    props: { dataPropied },
+  };
+}
 
 export default HomeView;
