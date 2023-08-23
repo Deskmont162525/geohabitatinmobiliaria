@@ -190,9 +190,7 @@ export const InputFile = ({
 
       try {
         setIsUploading(true);
-        // alert(`${url}/agentes/agente/info-images/${id_user}`)
         const response = await axios.post(
-          // `${url}/agentes/agente/info-images/${id_user}`, url modificar
           `${url}/agentes/agente/upload/${id_user}`,
 
           formData,
@@ -225,19 +223,8 @@ export const InputFile = ({
         // Realiza la lógica adicional necesaria, como manejar la respuesta del servidor, etc.
       } catch (error) {
         console.log("Error al cargar el archivo:", error);
-        if (error.response) {
-            // Error de respuesta del servidor (con código de estado HTTP)
-            alert(`error 1 ${error.response.data}`);
-            alert(`error 2 ${error.response.status}`);
-            alert(`error 3 ${error.response.headers}`);
-          } else if (error.request) {
-            // No se recibió ninguna respuesta del servidor
-            alert(`error 4 ${error.request}`);
-          } else {
-            // Otros errores
-            alert(`Error ${error.message}`);
-          }
-        alert(`llama el catch tierne.\nURL: ${url}\nEndpoint: /agentes/agente/info-images/\nID de usuario: ${id_user}\nerror: ${error}`);
+        
+        console.log(`llama el catch tierne.\nURL: ${url}\nEndpoint: /agentes/agente/info-images/\nID de usuario: ${id_user}\nerror: ${error}`);
       } finally {
         setIsUploading(false);
       }

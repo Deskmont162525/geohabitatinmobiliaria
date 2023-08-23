@@ -1,65 +1,62 @@
 import React from "react";
 import Router from "next/router";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
-import HomeView from "../pages/inicio";
+import NoSession from "../components/ui/NoSessionRol";
+import { validateTokenExpiration } from "../data/functions";
 
 export function requireNoAuthentication(Component) {
   return class AuthenticatedComponent extends React.Component {
     state = {
       isAuthenticated: true,
+      message:"No has iniciado sesión  . Por favor, inicia sesión para utilizar la aplicación."
     };
 
     componentDidMount() {
-      const { token, user } = parseCookies();
+      const { userGEO } = parseCookies();
+      const dataParse = userGEO === undefined || userGEO === ""    ? "" : JSON.parse(userGEO)
+// console.log("dataParse",dataParse);
+      if (dataParse !== "") {
+        // Verificar si la cookie ha expirado
+        
+        const temp = validateTokenExpiration(dataParse?.decodeToken?.exp)
+        if(temp === "0000"){
+          this.setState({ isAuthenticated: false,
+            message:"Tu sesión ha expirado. Por favor, vuelve a iniciar sesión para continuar utilizando la aplicación."
+           });
+           destroyCookie(null,'userJKMF'); 
+           this.redirectLogin();
+        }
 
-      if (!token || !user) {
-        this.setState({ isAuthenticated: false });
+        if(temp === "0001"){
+          this.setState({ isAuthenticated: true,
+           });
+        }
+
+
+      }
+       else {
+        this.setState({ isAuthenticated: false,
+          message:"No has iniciado sesión  . Por favor, inicia sesión para utilizar la aplicación."
+         });
+        this.redirectLogin();
       }
     }
+    
 
+    
+    redirectLogin = () => {
+      Router.push('/');
+    };
     render() {
       return (
         <>
-          {this.state.isAuthenticated === false ? (
+          {this.state.isAuthenticated === true ? (
             <Component {...this.props} />
           ) : (
-            <HomeView />
+            <NoSession message={this.state.message} />
           )}
         </>
       );
     }
   };
 }
-
-// import React from "react";
-// import nookies from "nookies";
-// import { useRouter } from "next/router";
-
-// export function requireAuthentication(Component) {
-//   const requireAuthentication = ({ token, user }) => {
-//     const router = useRouter();
-
-//     const [state, setstate] = useState(false);
-
-//     const redirectLogin = () => {
-//       router.push("/");
-//     };
-
-//     React.useEffect(() => {
-//       if (token || user) {
-//         setState(true);
-//       } else {
-//         redirectLogin();
-//       }
-//     }, []);
-//     return <>{state === true && <Component {...props} />}</>;
-//   };
-
-//   export async function getServerSideProps(ctx) {
-//     // Parse
-//     const cookies = nookies.get(ctx);
-
-//     return { cookies };
-//   }
-//   return requireAuthentication;
-// }

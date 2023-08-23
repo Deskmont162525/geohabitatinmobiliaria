@@ -1,4 +1,4 @@
-const FormSearch = () => {
+const FormSearch = ({setIsOpen}) => {
   return (
     <>
       <div className="banner-search">
@@ -50,8 +50,7 @@ const FormSearch = () => {
                 <p>Join now and get updated with all the properties deals.</p>
                 <button
                   className="btn btn-info"
-                  data-toggle="modal"
-                  data-target="#loginpop"
+                  onClick={() => setIsOpen(true)}
                 >
                   Login
                 </button>

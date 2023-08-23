@@ -5,11 +5,7 @@ import { createTheme } from "@material-ui/core/styles";
 import "../styles/404.styles.scss";
 import "../styles/globals.css";
 import "../styles/admin.styles.css";
-import "../public/assets/bootstrap/css/bootstrap.css";
-import "../public/assets/style.css";
-import "../public/assets/owl-carousel/owl.carousel.css";
-import "../public/assets/owl-carousel/owl.theme.css";
-import "../public/assets/slitslider/css/style.css";
+
 
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';

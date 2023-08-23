@@ -7,8 +7,9 @@ export const AuthService = {
   postSignIn: async (data) => {
     try {
       return await http
-        .post(`${urlAuth}/auth/users/login`, JSON.stringify(data))
-        .then((res) => {          
+        .post(`${urlAuth}/auth/user/login`, JSON.stringify(data))
+        .then((res) => {   
+          // console.log("que pasa ",res);       
           return res;
         })
         .catch((ex) => {

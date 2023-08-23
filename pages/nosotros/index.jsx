@@ -1,3 +1,4 @@
+import React from "react";
 import Footer from "../../components/ui/Footer";
 import HeaderPages from "../../components/ui/Header";
 import Navbar from "../../components/ui/Navbar";
@@ -5,10 +6,11 @@ import SubNavbar from "../../components/ui/SubNavbar";
 
 const url_serve = process.env.NEXT_PUBLIC_BASE_PATH;
 const AboutPage = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
   return (
     <>
       <div className="navbar-wrapper">
-        <Navbar active="Nosotros" />
+        <Navbar active="Nosotros" setIsOpen={setIsOpen} />
       </div>
       <HeaderPages />
       <SubNavbar title="Nosotros" />
@@ -89,7 +91,7 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };

@@ -2,24 +2,24 @@ import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
-import { FileUpload } from "primereact/fileupload";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { Toolbar } from "primereact/toolbar";
-import { classNames } from "primereact/utils";
 import React, { useEffect, useRef, useState } from "react";
-import { InteresaService } from "../../../services/InteresaService";
-import { intereState } from "../../../states/intereState";
-import { validatorDataIntere } from "../../../helpers/validations/interesados";
+import { PropiedService } from "../../../services/PropiedadesService";
+import FormPropiedad from "../formPropiedad";
+import { propieState } from "../../../states/propieState";
+import { validatorPropieState } from "../../../helpers/validations/propiedades";
 
-const FomrPropiedades = () => {
+const FomrPropiedades = ({ nameForm, tipoPagoOptions, agentsOptions }) => {
+  const [nameIndi, setNameIndi] = useState("Propiedad");
   const [products, setProducts] = useState(null);
   const [error, setError] = useState({});
   const [titleForm, setTitleForm] = useState("Crear");
   const [productDialog, setProductDialog] = useState(false);
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
   const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-  const [product, setProduct] = useState(intereState);
+  const [product, setProduct] = useState(propieState);
   const [selectedProducts, setSelectedProducts] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -27,11 +27,35 @@ const FomrPropiedades = () => {
   const dt = useRef(null);
 
   useEffect(() => {
-    InteresaService.getAllInteresados().then((data) => setProducts(data.data));
+    PropiedService.getAllPropied().then((data) => {
+      const mappedData = data?.data?.map((propiedad) => ({
+        _id: propiedad._id,
+        titulo: propiedad.titulo,
+        descripcion: propiedad.descripcion,
+        tipo: propiedad.tipo.nombre,
+        direccion: propiedad.direccion,
+        ciudad: propiedad.ciudad,
+        estado: propiedad.estado,
+        precio: propiedad.precio,
+        habitaciones: propiedad.habitaciones,
+        banos: propiedad.banos,
+        agente_id:
+          propiedad.agente_id.nombres + " " + propiedad.agente_id.apellidos,
+        zona_comun: propiedad.zona_comun,
+        cocina: propiedad.cocina,
+        ropas: propiedad.ropas,
+        parqueadero: propiedad.parqueadero,
+        unidad: propiedad.unidad,
+        barrio: propiedad.barrio,
+        comuna: propiedad.comuna,
+        observaciones: propiedad.observaciones,
+      }));
+      setProducts(mappedData);
+    });
   }, []);
 
   const openNew = () => {
-    setProduct(intereState);
+    setProduct(propieState);
     setSubmitted(false);
     setProductDialog(true);
   };
@@ -41,65 +65,100 @@ const FomrPropiedades = () => {
     setProductDialog(false);
   };
 
-  const hideDeleteProductDialog = () => {
-    setDeleteProductDialog(false);
-  };
-
-  const hideDeleteProductsDialog = () => {
-    setDeleteProductsDialog(false);
-  };
-
   const saveProduct = async () => {
     setSubmitted(true);
-
-    const validarData = validatorDataIntere(product, error);
+    const validarData = validatorPropieState(product, error);
     if (!validarData) {
       if (product?._id !== undefined && product?._id !== "") {
-        const response = await InteresaService.putActualizarIntere(
+        const response = await PropiedService.putActualizarPropied(
           product?._id,
           product
         );
         if (response.code === 200) {
-          const responseLista = await InteresaService.getAllInteresados();
-          setProducts(responseLista?.data);
+          const responseLista = await PropiedService.getAllPropied();
+          const mappedData = responseLista?.data?.map((propiedad) => ({
+            _id: propiedad._id,
+            titulo: propiedad.titulo,
+            descripcion: propiedad.descripcion,
+            tipo: propiedad.tipo.nombre,
+            direccion: propiedad.direccion,
+            ciudad: propiedad.ciudad,
+            estado: propiedad.estado,
+            precio: propiedad.precio,
+            habitaciones: propiedad.habitaciones,
+            banos: propiedad.banos,
+            agente_id:
+              propiedad.agente_id.nombres + " " + propiedad.agente_id.apellidos,
+            zona_comun: propiedad.zona_comun,
+            cocina: propiedad.cocina,
+            ropas: propiedad.ropas,
+            parqueadero: propiedad.parqueadero,
+            unidad: propiedad.unidad,
+            barrio: propiedad.barrio,
+            comuna: propiedad.comuna,
+            observaciones: propiedad.observaciones,
+          }));
+          setProducts(mappedData);
           toast.current.show({
             severity: "success",
             summary: "Proceso exitoso",
-            detail: "Interesado Actualizado",
+            detail: `${nameIndi} Actualizado`,
             life: 3000,
           });
         } else {
           toast.current.show({
             severity: "error",
             summary: "Error en el servidor intenta mas tarde",
-            detail: "Interesado No Actualizado",
+            detail: `${nameIndi} No Actualizado`,
             life: 3000,
           });
         }
         setProductDialog(false);
-        setProduct(intereState);
+        setProduct(propieState);
       }
       if (product?._id === undefined) {
-        const response = await InteresaService.postCreateInteresa(product);
+        const response = await PropiedService.postCreatePropied(product);
         if (response.code === 201) {
-          const responseLista = await InteresaService.getAllInteresados();
-          setProducts(responseLista?.data);
+          const responseLista = await PropiedService.getAllPropied();
+          const mappedData = responseLista?.data?.map((propiedad) => ({
+            _id: propiedad._id,
+            titulo: propiedad.titulo,
+            descripcion: propiedad.descripcion,
+            tipo: propiedad.tipo.nombre,
+            direccion: propiedad.direccion,
+            ciudad: propiedad.ciudad,
+            estado: propiedad.estado,
+            precio: propiedad.precio,
+            habitaciones: propiedad.habitaciones,
+            banos: propiedad.banos,
+            agente_id:
+              propiedad.agente_id.nombres + " " + propiedad.agente_id.apellidos,
+            zona_comun: propiedad.zona_comun,
+            cocina: propiedad.cocina,
+            ropas: propiedad.ropas,
+            parqueadero: propiedad.parqueadero,
+            unidad: propiedad.unidad,
+            barrio: propiedad.barrio,
+            comuna: propiedad.comuna,
+            observaciones: propiedad.observaciones,
+          }));
+          setProducts(mappedData);
           toast.current.show({
             severity: "success",
             summary: "Proceso exitoso",
-            detail: "Interesado Creado",
+            detail: `${nameIndi} Creado`,
             life: 3000,
           });
         } else {
           toast.current.show({
             severity: "error",
             summary: "Error en el servidor intenta mas tarde",
-            detail: "Interesado No Creado",
+            detail: `${nameIndi} No  Creado`,
             life: 3000,
           });
         }
         setProductDialog(false);
-        setProduct(intereState);
+        setProduct(propieState);
       }
     } else {
       setError(validarData);
@@ -111,81 +170,43 @@ const FomrPropiedades = () => {
     setProductDialog(true);
   };
 
-  const confirmDeleteProduct = (product) => {
-    setProduct(product);
-    setDeleteProductDialog(true);
-  };
-
-  const deleteProduct = async () => {
-    const response = await InteresaService.getDeleteIntereById(product._id);
-    if (response.code === 200) {
-      const responseLista = await InteresaService.getAllInteresados();
-      setProducts(responseLista?.data);
-      setDeleteProductDialog(false);
-      setProduct(intereState);
-      toast.current.show({
-        severity: "success",
-        summary: "Successful",
-        detail: "Interesado Eliminado",
-        life: 3000,
-      });
-    } else {
-      setProduct(intereState);
-      setDeleteProductDialog(false);
-      toast.current.show({
-        severity: "error",
-        summary: "Error en el servidor intenta mas tarde",
-        detail: "Interesado No Eliminado",
-        life: 3000,
-      });
-    }
-  };
-
   const exportCSV = () => {
-    dt.current.exportCSV();
-  };
-
-  const confirmDeleteSelected = () => {
-    setDeleteProductsDialog(true);
-  };
-
-  const deleteSelectedProducts = async () => {
-    const ids = selectedProducts.map((product) => product._id);
-    const dataSend = { ids: ids };
-    const response = await InteresaService.postDeletedInteresaMultiple(
-      dataSend
-    );
-
-    if (response.code === 200) {
-      const responseLista = await InteresaService.getAllInteresados();
-      setProducts(responseLista?.data);
-      setDeleteProductsDialog(false);
-      setSelectedProducts(null);
-      toast.current.show({
-        severity: "success",
-        summary: "Successful",
-        detail: "Interesado Eliminado",
-        life: 3000,
+    import("xlsx").then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(products);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      const excelBuffer = xlsx.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
       });
-    } else {
-      setSelectedProducts(null);
-      setDeleteProductsDialog(false);
-      toast.current.show({
-        severity: "error",
-        summary: "Error en el servidor intenta mas tarde",
-        detail: "Interesado No Eliminado",
-        life: 3000,
-      });
-    }
+
+      saveAsExcelFile(excelBuffer, nameForm);
+    });
+  };
+  const saveAsExcelFile = (buffer, fileName) => {
+    import("file-saver").then((module) => {
+      if (module && module.default) {
+        let EXCEL_TYPE =
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+        let EXCEL_EXTENSION = ".xlsx";
+        const data = new Blob([buffer], {
+          type: EXCEL_TYPE,
+        });
+
+        module.default.saveAs(
+          data,
+          fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
+        );
+      }
+    });
   };
 
   const onInputChange = (e, name) => {
     const val = (e.target && e.target.value) || "";
     let _product = { ...product };
-    _product[`${name}`] = val;
+    _product[`${name}`] = name === "parqueadero" ? e.target.checked : val;
 
     setProduct(_product);
-    const validarDatae = validatorDataIntere(_product, error);
+    const validarDatae = validatorPropieState(_product, error);
     setError(validarDatae);
   };
 
@@ -200,29 +221,14 @@ const FomrPropiedades = () => {
             className="mr-2"
             onClick={openNew}
           />
-          <Button
-            label="Delete"
-            icon="pi pi-trash"
-            severity="danger"
-            onClick={confirmDeleteSelected}
-            disabled={!selectedProducts || !selectedProducts.length}
-          />
         </div>
       </React.Fragment>
     );
   };
-
+  // console.log("products", products, product);
   const rightToolbarTemplate = () => {
     return (
       <React.Fragment>
-        <FileUpload
-          mode="basic"
-          accept="image/*"
-          maxFileSize={1000000}
-          label="Import"
-          chooseLabel="Import"
-          className="mr-2 inline-block"
-        />
         <Button
           label="Export"
           icon="pi pi-upload"
@@ -246,7 +252,7 @@ const FomrPropiedades = () => {
     return (
       <>
         <span className="p-column-title">Nombre</span>
-        {rowData.nombre}
+        {rowData.titulo}
       </>
     );
   };
@@ -261,19 +267,28 @@ const FomrPropiedades = () => {
           className="mr-2"
           onClick={() => editProduct(rowData)}
         />
-        <Button
-          icon="pi pi-trash"
-          severity="warning"
-          //   rounded={value.toString()}
-          onClick={() => confirmDeleteProduct(rowData)}
-        />
+      </>
+    );
+  };
+
+  const BoleanBodyTemplate = (rowData) => {
+    return (
+      <>
+        <span className="p-column-title">Parqueadero</span>
+        <span
+          className={`product-badge status-${
+            rowData.estado ? "instock" : "outofstock"
+          } `}
+        >
+          {rowData.estado ? "SI" : "NO"}
+        </span>
       </>
     );
   };
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">Administración de Interesados</h5>
+      <h5 className="m-0">Administración de {nameForm} </h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -291,22 +306,7 @@ const FomrPropiedades = () => {
       <Button label="Save" icon="pi pi-check" onClick={saveProduct} />
     </>
   );
-  const deleteProductDialogFooter = (
-    <>
-      <Button label="No" icon="pi pi-times" onClick={hideDeleteProductDialog} />
-      <Button label="Yes" icon="pi pi-check" onClick={deleteProduct} />
-    </>
-  );
-  const deleteProductsDialogFooter = (
-    <>
-      <Button
-        label="No"
-        icon="pi pi-times"
-        onClick={hideDeleteProductsDialog}
-      />
-      <Button label="Yes" icon="pi pi-check" onClick={deleteSelectedProducts} />
-    </>
-  );
+
   return (
     <div className="grid crud-demo">
       <div className="col-12">
@@ -329,16 +329,12 @@ const FomrPropiedades = () => {
             rowsPerPageOptions={[5, 10, 25]}
             className="datatable-responsive"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            currentPageReportTemplate="Se muestran {first} de {last} de {totalRecords} interesados"
+            currentPageReportTemplate={`Se muestran {first} de {last} de {totalRecords} ${nameForm}`}
             globalFilter={globalFilter}
             emptyMessage="No Hay Interesados."
             header={header}
             responsiveLayout="scroll"
           >
-            <Column
-              selectionMode="multiple"
-              headerStyle={{ width: "4rem" }}
-            ></Column>
             <Column
               field="_id"
               header="Codigo"
@@ -347,21 +343,106 @@ const FomrPropiedades = () => {
               headerStyle={{ minWidth: "15rem" }}
             ></Column>
             <Column
-              field="nombre"
+              field="titulo"
               header="Nombre"
               sortable
               body={nameBodyTemplate}
               headerStyle={{ minWidth: "15rem" }}
             ></Column>
             <Column
-              field="email"
-              header="Correo"
+              field="agente_id"
+              header="Agente Id"
+              sortable
+              headerStyle={{ minWidth: "10rem" }}
+            ></Column>
+            <Column
+              field="ciudad"
+              header="Ciudad"
               sortable
               headerStyle={{ minWidth: "15rem" }}
             ></Column>
             <Column
-              field="telefono"
-              header="Telefono"
+              field="comuna"
+              header="Comuna"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="habitaciones"
+              header="Habitaciones"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="descripcion"
+              header="Descripción"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="estado"
+              header="Estado"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="banos"
+              header="Baños"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="barrio"
+              header="Barrio"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="cocina"
+              header="Cocina"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="direccion"
+              header="Dirección"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="parqueadero"
+              header="Parqueadero"
+              body={BoleanBodyTemplate}
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="precio"
+              header="Precio"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="ropas"
+              header="Ropas"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="tipo"
+              header="Tipo Porpiedad"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="unidad"
+              header="Unidad"
+              sortable
+              headerStyle={{ minWidth: "15rem" }}
+            ></Column>
+            <Column
+              field="zona_comun"
+              header="zona Comun"
               sortable
               headerStyle={{ minWidth: "15rem" }}
             ></Column>
@@ -374,105 +455,20 @@ const FomrPropiedades = () => {
           <Dialog
             visible={productDialog}
             style={{ width: "450px" }}
-            header={`${titleForm} Interesado`}
+            header={`${titleForm} Propiedad`}
             modal
             className="p-fluid"
             footer={productDialogFooter}
             onHide={hideDialog}
           >
-            <div className="field">
-              <label htmlFor="name">Nombre</label>
-              <InputText
-                id="name"
-                value={product.nombre}
-                onChange={(e) => onInputChange(e, "nombre")}
-                required
-                autoFocus
-                className={classNames({
-                  "p-invalid": submitted && error?.errorNombre,
-                })}
-              />
-              {submitted && error?.errorNombre && (
-                <small className="p-invalid">
-                  {error?.errorTextNombre} Campo Obligatorio*.
-                </small>
-              )}
-            </div>
-            <div className="field">
-              <label htmlFor="name">Correo</label>
-              <InputText
-                id="name"
-                value={product.email}
-                onChange={(e) => onInputChange(e, "email")}
-                required
-                autoFocus
-                className={classNames({
-                  "p-invalid": submitted && error?.errorEmail,
-                })}
-              />
-              {submitted && error?.errorEmail && (
-                <small className="p-invalid">{error?.errorTextEmail}</small>
-              )}
-            </div>
-            <div className="field">
-              <label htmlFor="name">Telefono</label>
-              <InputText
-                id="name"
-                value={product.telefono}
-                onChange={(e) => onInputChange(e, "telefono")}
-                required
-                autoFocus
-                className={classNames({
-                  "p-invalid": submitted && error?.errortelefono,
-                })}
-              />
-              {submitted && error?.telefono && (
-                <small className="p-invalid">{error?.errorTexttelefono}</small>
-              )}
-            </div>
-          </Dialog>
-
-          <Dialog
-            visible={deleteProductDialog}
-            style={{ width: "450px" }}
-            header="Confirm"
-            modal
-            footer={deleteProductDialogFooter}
-            onHide={hideDeleteProductDialog}
-          >
-            <div className="flex align-items-center justify-content-center">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem" }}
-              />
-              {product && (
-                <span>
-                  Estas seguro de eliminar el interesado <b>{product.nombre}</b>
-                  ?
-                </span>
-              )}
-            </div>
-          </Dialog>
-
-          <Dialog
-            visible={deleteProductsDialog}
-            style={{ width: "450px" }}
-            header="Confirm"
-            modal
-            footer={deleteProductsDialogFooter}
-            onHide={hideDeleteProductsDialog}
-          >
-            <div className="flex align-items-center justify-content-center">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem" }}
-              />
-              {product && (
-                <span>
-                  Estas seguro de eliminar los interesados seleccionados?
-                </span>
-              )}
-            </div>
+            <FormPropiedad
+              tipoPagoOptions={tipoPagoOptions}
+              submitted={submitted}
+              product={product}
+              error={error}
+              onInputChange={onInputChange}
+              agentsOptions={agentsOptions}
+            />
           </Dialog>
         </div>
       </div>

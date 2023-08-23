@@ -3,17 +3,13 @@ import nookies from 'nookies';
 import NavbarAdmin from "../../components/ui/NavbarAdmin";
 import CardListC from "../../components/elements/cardListaCitas";
 import FomrCitasCrud from "../../components/elements/formCitas";
+import { requireNoAuthentication } from '../../HOC/noAuthHOC';
 
 
-const dataTemp = {
-    nombre:"Soy el mejor",
-    rol:"asesor",
-    url: ""
-}
 const AsesoresPage = () => {
   return (
     <div className="big">
-      <NavbarAdmin data={dataTemp} />
+      <NavbarAdmin />
       <div className="surface-0 p-4 shadow-2 border-round">
         <div className="text-3xl font-medium text-900 mb-3">
           Perfil Asesor
@@ -37,13 +33,5 @@ const AsesoresPage = () => {
   );
 };
 
-export async function getServerSideProps(context) {
-    const cookies = nookies.get(context);
-    const decodeData = cookies?.userGeo ? JSON.parse(cookies.userGeo) : '';
-    // const [dataClienteUser] = await Promise.all([AuthService.getAcriveUsuById(codigo)]);
-    return {
-        props: {  }
-    };
-}
-
-export default AsesoresPage;
+// export default requireNoAuthentication(AsesoresPage);
+export default AsesoresPage

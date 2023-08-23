@@ -2,14 +2,14 @@ import ModalLogin from "../../ui/Model";
 
 const url_serve = process.env.NEXT_PUBLIC_BASE_PATH;
 
-const Footer = () => {
+const Footer = ({isOpen, setIsOpen}) => {
   return (
     <>
     <a href="https://wa.me/3053273238?text=Me%20comunico%20desde%20el%20aplicativo%20web%20y%20quiero%20información%20sobre%20sus%20servicios%20" className="whatsapp" target="_blank"> <i className="fa fa-whatsapp whatsapp-icon"></i></a>
       <div className="footer">
         <div className="container">
           <div className="row">
-            <div className="col-lg-3 col-sm-3">
+            <div className="col-lg-4 col-sm-4">
               <h4>Information</h4>
               <ul className="row">
                 <li className="col-lg-12 col-sm-12 col-xs-3">
@@ -27,7 +27,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="col-lg-3 col-sm-3">
+            {/* <div className="col-lg-3 col-sm-3">
               <h4>Newsletter</h4>
               <p>
                 Get notified about the latest properties in our marketplace.
@@ -42,9 +42,9 @@ const Footer = () => {
                   Notify Me!
                 </button>
               </form>
-            </div>
+            </div> */}
 
-            <div className="col-lg-3 col-sm-3">
+            <div className="col-lg-4 col-sm-4">
               <h4>Follow us</h4>
               <a href="#">
                 <img src={`/${url_serve}/images/facebook.png`} alt="facebook" />
@@ -60,7 +60,7 @@ const Footer = () => {
               </a>
             </div>
 
-            <div className="col-lg-3 col-sm-3">
+            <div className="col-lg-4 col-sm-4">
               <h4>Contact us</h4>
               <p>
                 Bootstrap Realestate Inc.
@@ -78,7 +78,7 @@ const Footer = () => {
           <p className="copyright">Copyright 2013. All rights reserved.</p>
         </div>
       </div> 
-      <ModalLogin />     
+      <ModalLogin isOpen={isOpen} setIsOpen={setIsOpen} />     
     </>
   );
 };

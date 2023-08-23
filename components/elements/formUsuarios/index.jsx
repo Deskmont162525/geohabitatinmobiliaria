@@ -2,7 +2,6 @@ import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
-import { FileUpload } from "primereact/fileupload";
 import { InputText } from "primereact/inputtext";
 import { InputSwitch } from "primereact/inputswitch";
 import { Password } from "primereact/password";
@@ -39,10 +38,10 @@ const Fomrusuarios = ({ nameForm }) => {
         username: user.username,
         email: user.email,
         role: user.role?.name || "",
-        nombres: user.nombres,
+        nombres: user.nombres !== undefined ? user.nombres : "",
         estado: user.estado,
-        apellidos: user.apellidos,
-        numero_documento: user.numero_documento,
+        apellidos: user.apellidos !== undefined ? user.apellidos : "",
+        numero_documento: user.numero_documento !== undefined ? user.numero_documento : "",
         tipo_documento: user.tipo_documento?.name || "",
         numero_telefonico: user.numero_telefonico || "",
       }));
@@ -80,7 +79,9 @@ const Fomrusuarios = ({ nameForm }) => {
 
   const saveProduct = async () => {
     setSubmitted(true);
+    
     const validarData = validateUserData(product, error, titleForm);
+    console.log("que pasa ",product,validarData);
     if (!validarData) {
       if (product?._id !== undefined && product?._id !== "") {
         const response = await UserGService.putActualizarUserGs(
@@ -94,10 +95,10 @@ const Fomrusuarios = ({ nameForm }) => {
             username: user.username,
             email: user.email,
             role: user.role?.name || "",
-            nombres: user.nombres,
+            nombres: user.nombres !== undefined ? user.nombres : "",
             estado: user.estado,
-            apellidos: user.apellidos,
-            numero_documento: user.numero_documento,
+            apellidos: user.apellidos !== undefined ? user.apellidos : "",
+            numero_documento: user.numero_documento !== undefined ? user.numero_documento : "",
             tipo_documento: user.tipo_documento?.name || "",
             numero_telefonico: user.numero_telefonico || "",
           }));
@@ -128,10 +129,10 @@ const Fomrusuarios = ({ nameForm }) => {
             username: user.username,
             email: user.email,
             role: user.role?.name || "",
-            nombres: user.nombres,
+            nombres: user.nombres !== undefined ? user.nombres : "",
             estado: user.estado,
-            apellidos: user.apellidos,
-            numero_documento: user.numero_documento,
+            apellidos: user.apellidos !== undefined ? user.apellidos : "",
+            numero_documento: user.numero_documento !== undefined ? user.numero_documento : "",
             tipo_documento: user.tipo_documento?.name || "",
             numero_telefonico: user.numero_telefonico || "",
           }));
@@ -177,10 +178,10 @@ const Fomrusuarios = ({ nameForm }) => {
         username: user.username,
         email: user.email,
         role: user.role?.name || "",
-        nombres: user.nombres,
+        nombres: user.nombres || "",
         estado: user.estado,
-        apellidos: user.apellidos,
-        numero_documento: user.numero_documento,
+        apellidos: user.apellidos !== undefined ? user.apellidos : "",
+        numero_documento: user.numero_documento !== undefined ? user.numero_documento : "",
         tipo_documento: user.tipo_documento?.name || "",
         numero_telefonico: user.numero_telefonico || "",
       }));
@@ -256,10 +257,10 @@ const Fomrusuarios = ({ nameForm }) => {
         username: user.username,
         email: user.email,
         role: user.role?.name || "",
-        nombres: user.nombres,
+        nombres: user.nombres !== undefined ? user.nombres : "",
         estado: user.estado,
         apellidos: user.apellidos,
-        numero_documento: user.numero_documento,
+        numero_documento: user.numero_documento !== undefined ? user.numero_documento : "",
         tipo_documento: user.tipo_documento?.name || "",
         numero_telefonico: user.numero_telefonico || "",
       }));
@@ -292,6 +293,7 @@ const Fomrusuarios = ({ nameForm }) => {
         ? e.target.value
         : val;
     setProduct(_product);
+    console.log("_product", _product);
     const validarDatae = validateUserData(_product, error);
     setError(validarDatae);
   };
@@ -422,7 +424,7 @@ const Fomrusuarios = ({ nameForm }) => {
       <Button label="Yes" icon="pi pi-check" onClick={deleteSelectedProducts} />
     </>
   );
-  console.log("product", product);
+  console.log("error", error);
   return (
     <div className="grid crud-demo">
       <div className="col-12">
@@ -445,14 +447,14 @@ const Fomrusuarios = ({ nameForm }) => {
             rowsPerPageOptions={[5, 10, 25]}
             className="datatable-responsive mt-4"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            currentPageReportTemplate="Se muestran {first} de {last} de {totalRecords} Usuarios"
+            currentPageReportTemplate={`Se muestran {first} de {last} de {totalRecords} ${nameForm}`}
             globalFilter={globalFilter}
             emptyMessage="No Hay Usuarios."
             header={header}
             responsiveLayout="scroll"
-            scrollable 
+            scrollable
             scrollHeight="400px"
-          >            
+          >
             <Column
               selectionMode="multiple"
               headerStyle={{ width: "4rem" }}
@@ -527,12 +529,12 @@ const Fomrusuarios = ({ nameForm }) => {
               body={statusBodyTemplate}
               sortable
               headerStyle={{ minWidth: "10rem" }}
-            ></Column> 
+            ></Column>
             <Column
               body={actionBodyTemplate}
               headerStyle={{ minWidth: "10rem" }}
-              frozen 
-            ></Column>           
+              frozen
+            ></Column>
           </DataTable>
 
           <Dialog
@@ -575,9 +577,9 @@ const Fomrusuarios = ({ nameForm }) => {
             </div>
 
             <div className="field">
-              <label htmlFor="name">Nombres</label>
+              <label htmlFor="nombres">Nombres</label>
               <InputText
-                id="name"
+                id="nombres"
                 value={product.nombres}
                 onChange={(e) => onInputChange(e, "nombres")}
                 required
@@ -594,9 +596,9 @@ const Fomrusuarios = ({ nameForm }) => {
             </div>
 
             <div className="field">
-              <label htmlFor="last-name">Apellidos</label>
+              <label htmlFor="apellidos">Apellidos</label>
               <InputText
-                id="last-name"
+                id="apellidos"
                 value={product.apellidos}
                 onChange={(e) => onInputChange(e, "apellidos")}
                 required
